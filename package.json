@@ -1,0 +1,32 @@
+{
+  "name": "planaria",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "author": "",
+  "license": "MIT",
+  "scripts": {
+    "start": "node index",
+    "build": "docker build -t planarium/planaria .",
+    "push": "docker build -t planarium/planaria . ; docker push planarium/planaria",
+    "lint": "./node_modules/.bin/eslint ."
+  },
+  "dependencies": {
+    "axios": "^0.18.0",
+    "bcode": "0.0.7",
+    "bitcoind-rpc": "^0.7.2",
+    "dotenv": "^6.0.0",
+    "highland": "^2.13.0",
+    "interlevel": "0.0.6",
+    "ip": "^1.1.5",
+    "level": "^4.0.0",
+    "mongodb": "^3.1.4",
+    "p-limit": "^2.0.0",
+    "p-queue": "^3.0.0",
+    "txo": "0.0.7",
+    "zeromq": "^4.6.0"
+  },
+  "devDependencies": {
+    "eslint": "^5.6.1"
+  }
+}
