@@ -190,6 +190,9 @@ const util = {
               return Info.setclock(gene, val)
             }
           },
+        },
+        assets: {
+          path: './public/assets/' + gene.address
         }
       }
       await gene.onrestart(MACHINE)

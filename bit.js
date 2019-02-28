@@ -317,6 +317,9 @@ const sync = async function(type, hash) {
                     self: {
                       now: clk
                     }
+                  },
+                  assets: {
+                    path: './public/assets/' + gene.address
                   }
                 }
                 // if the gene's checkpoint is larger than the global checkpoint
@@ -398,6 +401,9 @@ const sync = async function(type, hash) {
                 delete: function(o) {
                   return Db.delete(Object.assign({address: GENES[i].address}, o))
                 },
+              },
+              assets: {
+                path: './public/assets/' + GENES[i].address
               }
             }
             if (GENES[i].onmempool) {
