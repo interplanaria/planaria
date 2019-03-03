@@ -77,7 +77,9 @@ const request = {
   },
   tx: async function(hash, verbose) {
     let content = await TXO.fromHash(hash, verbose, BITCOIN_CONFIG.rpc)
-    delete content.tx.r // don't use raw tx for now. implement memory efficient handling first
+    if (!process.env.FAT) {
+      delete content.tx.r
+    }
     return content
   },
   mempool: function() {
@@ -318,6 +320,7 @@ const sync = async function(type, hash) {
                       now: clk
                     }
                   },
+                  env: process.env,
                   assets: {
                     path: './public/assets/' + gene.address
                   }
@@ -402,6 +405,7 @@ const sync = async function(type, hash) {
                   return Db.delete(Object.assign({address: GENES[i].address}, o))
                 },
               },
+              env: process.env,
               assets: {
                 path: './public/assets/' + GENES[i].address
               }

@@ -191,6 +191,7 @@ const util = {
             }
           },
         },
+        env: process.env,
         assets: {
           path: './public/assets/' + gene.address
         }
