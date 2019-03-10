@@ -34,6 +34,7 @@ const pLimit = require('p-limit')
 const pQueue = require('p-queue')
 const queue = new pQueue({concurrency: BITCOIN_CONFIG.rpc.limit})
 const bcode = require('bcode')
+const path = require('path')
 var GENES
 
 const init = function(db, info, genes) {
@@ -319,7 +320,8 @@ const sync = async function(type, hash) {
                     }
                   },
                   assets: {
-                    path: './public/assets/' + gene.address
+                    path: './public/assets/' + gene.address,
+                    absolutePath: path.resolve('./public/assets/' + gene.address)
                   }
                 }
                 // if the gene's checkpoint is larger than the global checkpoint
@@ -403,7 +405,8 @@ const sync = async function(type, hash) {
                 },
               },
               assets: {
-                path: './public/assets/' + GENES[i].address
+                path: './public/assets/' + GENES[i].address,
+                absolutePath: path.resolve('./public/assets/' + GENES[i].address)
               }
             }
             if (GENES[i].onmempool) {
