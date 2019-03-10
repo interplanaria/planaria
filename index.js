@@ -51,6 +51,7 @@ const Info = require('./info.js')
 const Bit = require('./bit.js')
 const Db = require('./db')
 const ip = require('ip')
+const path = require('path')
 const daemon = {
   run: async function() {
     // 1. Initialize
@@ -192,7 +193,8 @@ const util = {
           },
         },
         assets: {
-          path: './public/assets/' + gene.address
+          path: './public/assets/' + gene.address,
+          absolutePath: path.resolve('./public/assets/' + gene.address)
         }
       }
       await gene.onrestart(MACHINE)
