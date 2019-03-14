@@ -16,6 +16,8 @@ if [[ "$1" == "start" ]]; then
 
   echo "# Inheriting package.json...."
   node /planaria/merge /planaria
+  echo "# rm -rf node_modules..."
+  rm -rf ./node_modules
   echo "# npm install..."
   npm install
 

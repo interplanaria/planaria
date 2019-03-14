@@ -323,6 +323,9 @@ const sync = async function(type, hash) {
                   env: process.env,
                   assets: {
                     path: './public/assets/' + gene.address
+                  },
+                  fs: {
+                    path: '/fs/' + gene.address
                   }
                 }
                 // if the gene's checkpoint is larger than the global checkpoint
@@ -408,6 +411,9 @@ const sync = async function(type, hash) {
               env: process.env,
               assets: {
                 path: './public/assets/' + GENES[i].address
+              },
+              fs: {
+                path: '/fs/' + GENES[i].address
               }
             }
             if (GENES[i].onmempool) {
