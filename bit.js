@@ -77,7 +77,7 @@ const request = {
   },
   tx: async function(hash, verbose) {
     let content = await TXO.fromHash(hash, verbose, BITCOIN_CONFIG.rpc)
-    if (!process.env.FAT) {
+    if (process.env.FAT !== 'true') {
       delete content.tx.r
     }
     return content
