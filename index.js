@@ -20,6 +20,8 @@ try {
     console.log("# Overriding", k, ":", override[k])
   }
 } catch (e) { }
+console.log("# Final Planaria ENV:")
+console.log("#", JSON.stringify(process.env, null, 2))
 console.log("####################")
 
 // Filter the folders in the current directory that has:
