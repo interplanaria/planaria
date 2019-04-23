@@ -366,9 +366,11 @@ const sync = async function(type, hash) {
     }
   } else if (type === 'tx') {
     queue.add(async function() {
-      let o = await request.tx(hash, true)
+      let o = await request.tx(hash, true).catch(function(e) {
+        console.log('Error = ', e)
+      })
       // distinguish between mempool transactions and block transactions
-      if (!o.confirmations || (o.confirmations && o.confirmations === 0)) {
+      if (o && !o.confirmations || (o.confirmations && o.confirmations === 0)) {
         try {
           delete o.confirmations
         } catch (e) { }
