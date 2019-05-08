@@ -5,6 +5,7 @@ var filter
 var processor
 var working = false
 // Const
+const ip = require('ip')
 const BITCOIN_CONFIG = {
   rpc: {
     protocol: 'http',
