@@ -67,7 +67,7 @@ describe('db', () => {
           sortBy([...Object.keys(gene.index), 'system.indexes'])
         )
       }
-      // TODO: assert existence of indezies
+      // TODO: assert existence of indexes
     })
   })
 })
