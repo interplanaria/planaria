@@ -1,13 +1,11 @@
 const _ = require('highland');
 const MongoClient = require('mongodb').MongoClient
-var db
-var mongo
 var GENES
 var Manager
 const init = function(genes) {
   GENES = genes
-  Manager = {} 
-  let promises = GENES.map(function(gene, index) {
+  Manager = {}
+  const promises = GENES.map(function(gene) {
     return new Promise(function(resolve) {
       MongoClient.connect(process.env.PLANA_DB_URL, {useNewUrlParser: true}, function(err, client) {
         if (err) console.log(err)
@@ -21,13 +19,15 @@ const init = function(genes) {
   })
   return Promise.all(promises)
 }
-const exit = function() {
-  let promises = Object.keys(Manager).map(function(address) {
+const exit = async function() {
+  const promises = Object.keys(Manager).map(function(address) {
     return new Promise(function(resolve) {
       Manager[address].mongo.close()
       resolve()
     })
   })
+  GENES = undefined
+  Manager = undefined
   return Promise.all(promises)
 }
 
@@ -47,14 +47,16 @@ const exit = function() {
 *
 ***************************************/
 const instances = async function() {
-  return Object.keys(Manager).map(async function(address) {
-    let infos = await Manager[address].db.listCollections().toArray()
-    let collectionNames = infos.map(function(info) { return info.name })
-    return {
-      address: address,
-      names: collectionNames
-    }
-  })
+  return Promise.all(
+    Object.keys(Manager).map(async function(address) {
+      let infos = await Manager[address].db.listCollections().toArray()
+      let collectionNames = infos.map(function(info) { return info.name })
+      return {
+        address: address,
+        names: collectionNames
+      }
+    })
+  )
 }
 
 /***********************************
@@ -69,7 +71,7 @@ const instances = async function() {
 *       onchunk: function(chunk) { },
 *       onfinish: function() { },
 *     })
-*   
+*
 *     // Multi item batch insert
 *     db.create({
 *       address: PLANARIA_ADDRESS,
@@ -78,7 +80,7 @@ const instances = async function() {
 *       onchunk: function(chunk) { },
 *       onfinish: function() { },
 *     })
-*   
+*
 *
 *   2. Read
 *
@@ -93,7 +95,7 @@ const instances = async function() {
 *         skip: SKIP,
 *       }
 *     })
-*   
+*
 *
 *   3. Update: Delete and Insert
 *
@@ -109,7 +111,7 @@ const instances = async function() {
 *       },
 *       map: MAP_FUNCTION
 *     })
-*   
+*
 *
 *   4. Delete
 *
