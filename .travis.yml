@@ -1,0 +1,26 @@
+language: node_js
+
+env:
+  global:
+    - FORCE_COLOR=1
+
+node_js:
+  - '10'
+
+cache:
+  directories:
+    - ~/.npm
+
+before_install:
+  - npm install -g npm@6
+
+script:
+  # - npm run lint
+  - npm test
+
+stages:
+  - test
+
+branches:
+  only:
+    - master
