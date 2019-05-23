@@ -53,7 +53,6 @@ console.log("GENES = ", GENES)
 const Info = require('./info.js')
 const Bit = require('./bit.js')
 const Db = require('./db')
-const ip = require('ip')
 const daemon = {
   run: async function() {
     // 1. Initialize
