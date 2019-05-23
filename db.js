@@ -206,12 +206,12 @@ const index = async function() {
         let schema = gene.index[collectionName].schema
         let uniq = gene.index[collectionName].unique
         let fulltext = gene.index[collectionName].fulltext
+        console.log('Indexing keys...')
         if (schema) {
           for(let i=0; i<schema.length; i++) {
             let indexItem = schema[i];
             let options = null;
             let keys = {};
-            console.log("typeof = ", typeof indexItem)
             if (typeof indexItem === 'object') {
               if (indexItem.$options) {
                 options = indexItem.$options; 
@@ -242,7 +242,6 @@ const index = async function() {
             }
           }
         } else if (keys) {
-          console.log('Indexing keys...')
           if (Array.isArray(keys)) {
             // basic
             for(let i=0; i<keys.length; i++) {
