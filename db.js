@@ -203,10 +203,45 @@ const index = async function() {
       for(let j=0; j<collectionNames.length; j++) {
         let collectionName = collectionNames[j]
         let keys = gene.index[collectionName].keys
+        let schema = gene.index[collectionName].schema
         let uniq = gene.index[collectionName].unique
         let fulltext = gene.index[collectionName].fulltext
-        if (keys) {
-          console.log('Indexing keys...')
+        console.log('Indexing keys...')
+        if (schema) {
+          for(let i=0; i<schema.length; i++) {
+            let indexItem = schema[i];
+            let options = null;
+            let keys = {};
+            if (typeof indexItem === 'object') {
+              if (indexItem.$options) {
+                options = indexItem.$options; 
+              }
+              if (indexItem.$keys) {
+                keys = indexItem.$keys;
+              }
+            } else if (typeof indexItem === 'string') {
+              keys[indexItem] = 1;
+            }
+            console.log("KEYS = ", JSON.stringify(keys), JSON.stringify(options));
+            if (keys) {
+              console.time('Index:' + JSON.stringify(keys) +  JSON.stringify(options))
+              try {
+                if (options) {
+                  await db.collection(collectionName).createIndex(keys, options);
+                  console.log('* Created unique index for ', keys, options);
+                } else {
+                  await db.collection(collectionName).createIndex(keys);
+                  console.log('* Created index for ', keys);
+                }
+              } catch (e) {
+                console.log("Error", e)
+                console.log("Index already exists", keys, options)
+                process.exit()
+              }
+              console.timeEnd('Index:' + JSON.stringify(keys) +  JSON.stringify(options))
+            }
+          }
+        } else if (keys) {
           if (Array.isArray(keys)) {
             // basic
             for(let i=0; i<keys.length; i++) {
