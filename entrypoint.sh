@@ -22,7 +22,7 @@ if [[ "$1" == "start" ]]; then
   npm install
 
   echo "# Starting Planaria......."
-  node --max-old-space-size=4096 /planaria/index $3 $4 $5
+  node --max-old-space-size=8192 /planaria/index $3 $4 $5
 fi
 
 exec "$@"

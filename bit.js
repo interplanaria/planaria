@@ -117,12 +117,18 @@ const crawl = async function(block_index) {
     console.log('crawling txs = ', txs.length)
     let tasks = []
     const limit = pLimit(BITCOIN_CONFIG.rpc.limit)
+    let counter = 0;
     for(let i=0; i<txs.length; i++) {
       tasks.push(limit(async function() {
         let t = await request.tx(txs[i]).catch(function(e) {
           console.log('Error = ', e)
         })
         t.blk = { i: block_index, h: block_hash, t: block_time }
+        counter++;
+        if (counter >= 1000) {
+          console.log("Finished", i, "of", txs.length)
+          counter = 0;
+        }
         return t
       }))
     }
