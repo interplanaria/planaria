@@ -15,7 +15,7 @@
     "axios": "^0.18.0",
     "bcode": "0.0.7",
     "bitcoind-rpc": "^0.7.2",
-    "bsv": "^0.26.5",
+    "bsv": "^2.0.10",
     "dotenv": "^6.0.0",
     "highland": "^2.13.0",
     "interlevel": "0.0.6",
